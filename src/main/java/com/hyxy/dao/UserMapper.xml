@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyxy.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.hyxy.entity.User" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="UserName" property="username" jdbcType="VARCHAR" />
+    <result column="PassWord" property="password" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="BIGINT" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="CreatTime" property="creattime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hyxy.entity.User" >
+    insert into user (ID, UserName, PassWord, 
+      Phone, Email, role_id, 
+      CreatTime)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
+      #{creattime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hyxy.entity.User" >
+    update user
+    set UserName = #{username,jdbcType=VARCHAR},
+      PassWord = #{password,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=BIGINT},
+      Email = #{email,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      CreatTime = now()
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select ID, UserName, PassWord, Phone, Email, role_id, CreatTime
+    from user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, UserName, PassWord, Phone, Email, role_id, CreatTime
+    from user
+  </select>
+  
+  <insert id="insertMap" parameterType="map">
+     insert into user(username,password) values(#{username},#{password});
+  </insert>
+</mapper>
